@@ -1,0 +1,26 @@
+{
+  "name": "avme-extension",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/avme/avme-extension.git"
+  },
+  "description": "AVME Extension",
+  "main": "src",
+  "scripts": {
+    "test": "standard",
+    "build": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/pop.html ./dist/pop.html"
+  },
+  "devDependencies": {
+    "ncp": "2.0.0",
+    "rimraf": "3.0.2",
+    "standard": "16.0.3",
+    "terser-webpack-plugin": "5.2.3",
+    "webpack": "5.52.0",
+    "webpack-cli": "4.8.0"
+  },
+  "dependencies": {
+    "eth-provider": "0.9.4",
+    "ethereum-provider": "0.4.4"
+  }
+}
