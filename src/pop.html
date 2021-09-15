@@ -3,6 +3,113 @@
   <head>
     <title>AVME</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500" rel="stylesheet"> -->
+    <style>
+      /* @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap'); */
+      * {
+        margin:0;
+        padding:0;
+      }
+
+      @font-face {
+        font-family: 'Roboto Mono';
+        src: url(roboto-mono.ttf);
+      }
+
+      body {
+        
+        /* min-width: 280px; */
+        min-width: 350px;
+        /* min-height: 240px; */
+        /* background-image: linear-gradient(#9300f5, #3bc5f4); */
+        background-color: #F6F7F8;
+        color: white;
+        font-family: 'Roboto Mono', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+      }
+      a, a:hover, a:visited {
+        color: white;
+        font-size: 12px;
+        text-decoration: none;
+        font-weight: 400;
+      }
+      img {
+        width: 90px;
+        height: 90px;
+      }
+      /* div {
+        width: 100%;
+      } */
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: flex-start;
+        /* align-content: center; */
+      }
+      .container div{
+        flex-grow: 1;
+      }
+      .center-flex
+      {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      ul li {
+        background-color: white;
+        color: #243247;
+        text-align: left;
+        vertical-align: middle;
+        display: flex;
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      li img {
+        width: 24px;
+        height: 24px;
+        margin-left: 12px;
+        margin-right: 12px;
+      }
+      li:hover {
+        background-color: #E7E8EA;
+      }
+      li:nth-child(1)
+      {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='within container'>
+      <div class='center-flex' style= "padding: 8px;">
+        <img src='icon.png'>
+      </div>
+      <hr style="border-color: white">
+      <div style="background-color: white; text-align: center;">
+        <ul>
+          <li><strong>STATUS:</strong><strong id="label-status">{status}</strong></li>
+          <li><img src='settings-cog.png'><strong>Options</strong></li>
+          <li><img src='logout.png'><strong>Close</strong></li>
+        </ul>
+      </div>
+      <!-- <img src='icon.png' />
+      <div class='sub'>AVME is not currently running on your machine</div>
+      <div style="background-color: rgba(0,0,0,0.4);padding: 10px; margin-top:21px; padding-bottom:14px;">
+          <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">Click here to download the latest version</a>
+      </div> -->
+    </div>
+  </body>
+</html>
+<!--
+
+  <!doctype html>
+<html>
+  <head>
+    <title>AVME</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500" rel="stylesheet">
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
@@ -47,3 +154,6 @@
     </div>
   </body>
 </html>
+
+
+-->
