@@ -5,7 +5,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500" rel="stylesheet"> -->
     <style>
-      /* @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap'); */
       * {
         margin:0;
         padding:0;
@@ -15,21 +14,27 @@
         font-family: 'Roboto Mono';
         src: url(roboto-mono.ttf);
       }
-
+      html {
+        /* --iconSpacing: 12px; */
+        --iconSpacing: 16px;
+        --mm: rgb(230, 138, 60);
+        --good: rgb(148, 0, 246);
+        --backgroundColor: white;
+        --max-width: 280px;
+      }
       body {
         
         /* min-width: 280px; */
-        min-width: 350px;
+        width: var(--max-width);
         /* min-height: 240px; */
         /* background-image: linear-gradient(#9300f5, #3bc5f4); */
-        background-color: #F6F7F8;
-        color: white;
+        background-color: var(--backgroundColor);
         font-family: 'Roboto Mono', sans-serif;
         font-weight: 300;
         font-size: 16px;
       }
       a, a:hover, a:visited {
-        color: white;
+        /* color: white; */
         font-size: 12px;
         text-decoration: none;
         font-weight: 400;
@@ -38,9 +43,6 @@
         width: 90px;
         height: 90px;
       }
-      /* div {
-        width: 100%;
-      } */
       .container {
         display: flex;
         flex-direction: column;
@@ -58,51 +60,123 @@
         align-items: center;
       }
       ul li {
-        background-color: white;
+        background-color: var(--backgroundColor);
         color: #243247;
         text-align: left;
         vertical-align: middle;
         display: flex;
         padding-top: 6px;
         padding-bottom: 6px;
+        font-size: 12px;
       }
       li img {
-        width: 24px;
-        height: 24px;
-        margin-left: 12px;
-        margin-right: 12px;
+        width: 18px;
+        height: 18px;
+        margin-left: var(--iconSpacing);
+        margin-right: var(--iconSpacing);
+        align-self: center;
       }
       li:hover {
         background-color: #E7E8EA;
       }
-      li:nth-child(1)
+      .main-list li:nth-child(1)
       {
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: var(--iconSpacing);
+        padding-right: var(--iconSpacing);
+      }
+      .main-list li:hover:nth-child(1)
+      {
+        background-color: var(--backgroundColor);
+      }
+      li strong
+      {
+        align-self: center;
+        padding-bottom: 1px;
+      }
+      #label-status
+      {
+        color: var(--good);
+      }
+      #label-swap
+      {
+        color: var(--mm);
+      }
+      /*Options*/
+      .options
+      {
+        width: var(--max-width);
+        min-height: 100px;
+        background-color: rgba(255, 0, 0, 0.432);
+        top: 0;
+        left: 0;
+        position: absolute;
+      }
+      .disabled {
+        display: none;
       }
     </style>
   </head>
   <body>
-    <div class='within container'>
-      <div class='center-flex' style= "padding: 8px;">
-        <img src='icon.png'>
+    <div style="padding-bottom: 4px;">
+      <!--Main-->
+      <div class='within container'>
+        <div class='center-flex' style= "padding: 8px; background-color: #F6F7F8;">
+          <img src='icon.png'>
+        </div>
+        <div style="background-color: white; text-align: center;">
+          <ul class="main-list">
+            <li>
+              <p id='status-label'>
+                <strong>STATUS:</strong> <strong>Wallet not Initialized</strong>
+                <!-- <strong>STATUS:</strong> <strong>Injecting as</strong> <strong id="label-status">AVME</strong> -->
+              </p>
+            </li>
+            <hr style="border-color: white">
+            <!-- <li><img src='swap.png'>
+              <p>
+                <strong>Swap to</strong> <strong id="label-swap">METAMASK</strong>
+              </p>
+            </li> -->
+            <li id='options-popup'><img src='settings-cog.png'><strong>Options</strong></li>
+            <li id='close-popup'><img src='cancel.png'><strong>Close</strong></li>
+          </ul>
+        </div>
+        <!-- <img src='icon.png' />
+        <div class='sub'>AVME is not currently running on your machine</div>
+        <div style="background-color: rgba(0,0,0,0.4);padding: 10px; margin-top:21px; padding-bottom:14px;">
+            <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">Click here to download the latest version</a>
+        </div> -->
       </div>
-      <hr style="border-color: white">
-      <div style="background-color: white; text-align: center;">
-        <ul>
-          <li><strong>STATUS:</strong><strong id="label-status">{status}</strong></li>
-          <li><img src='settings-cog.png'><strong>Options</strong></li>
-          <li><img src='logout.png'><strong>Close</strong></li>
-        </ul>
+
+      <!--Options-->
+      <div class='options disabled'>
+        <div style="background-color: white; text-align: center;">
+          <ul>
+            <li id='close-options'><img src='left-arrow.png'><strong>Back</strong></li>
+            <hr style="border-color: white">
+          </ul>
+          <div style="
+            display: flex;
+            flex-direction: column;
+            align-content: flex-start;
+            text-align: left;
+            gap: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+          ">
+            <label for="address"><strong>Address:</strong></label>
+            <input id="address"type="text">
+            <label for="port"><strong>Port:</strong></label>
+            <input id="port"type="text">
+          </div>
+        </div>
       </div>
-      <!-- <img src='icon.png' />
-      <div class='sub'>AVME is not currently running on your machine</div>
-      <div style="background-color: rgba(0,0,0,0.4);padding: 10px; margin-top:21px; padding-bottom:14px;">
-          <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">Click here to download the latest version</a>
-      </div> -->
     </div>
   </body>
+  <script src="popup.js"></script>
 </html>
+
+<!-- <script src="index.js"></script> -->
 <!--
 
   <!doctype html>
