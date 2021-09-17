@@ -19,9 +19,10 @@
         /* --iconSpacing: 12px; */
         --iconSpacing: 16px;
         --mm: rgb(230, 138, 60);
-        --good: rgb(148, 0, 246);
+        --avme: rgb(148, 0, 246);
         --backgroundColor: #1D1827;
-        --max-width: 280px;
+        /* --max-width: 280px; */
+        --max-width: 300px;
       }
 
       body {
@@ -78,14 +79,14 @@
         background-color: var(--backgroundColor);
       }
 
-      #label-status
-      {
-        color: var(--good);
-      }
-
-      #label-swap
+      #metamask
       {
         color: var(--mm);
+      }
+
+      #avme
+      {
+        color: var(--avme);
       }
 
       /*Options*/
@@ -165,17 +166,25 @@
         padding: 4px 0;
       }
       
+      #form-options {
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        text-align: left;
+        gap: 4px;
+        padding: 16px;
+        font-size: 12px;
+      }
     </style>
   </head>
   <body>
     <div style="padding-bottom: 4px;">
-      <!--Main-->
       <div id="main" class="within container">
         <div class="center-flex" style= "padding: 24px; /*margin: 32px 0;*/ margin-top: 32px;">
           <img src="icon.png">
         </div>
       </div>
-      <!--Bubble Actions-->
+      <!--Floating Elements-->
       <div class='stack'>
         <div style="display: flex; flex-direction: row;">
           <div class="float-icon info">
@@ -186,7 +195,7 @@
           <div style="text-align: center; margin-top: 6px; width: 100%;">
             <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">
               <p>Status:</p>
-              <p>Wallet not initialized</p>
+              <p id="label-status"></p>
             </a>
           </div>
           <div class="float-icon">
@@ -198,8 +207,7 @@
       </div>
       <!--Options-->
       <div id="options-popup" class='stack form-bg disabled'>
-        <div style="text-align: center;">
-          
+        <div style="text-align: center;"> 
           <div id='close-options' style="display: flex; flex-direction: row;">
             <div class='float-icon info' style="margin-left: 8px;">
               <div>
@@ -210,16 +218,7 @@
                 <p>OPTIONS</p>
             </div>
           </div>
-          
-          <div style="
-            display: flex;
-            flex-direction: column;
-            align-content: flex-start;
-            text-align: left;
-            gap: 4px;
-            padding: 16px;
-            font-size: 12px;
-          ">
+          <div id="form-options">
             <label for="address">ADDRESS</label>
             <input id="address"type="text">
             <label for="port">PORT</label>
@@ -229,5 +228,5 @@
       </div>
     </div>
   </body>
-  <script src="popup.js"></script>
+  <script src="page.js"></script>
 </html>

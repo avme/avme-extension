@@ -9,7 +9,7 @@
   "main": "src",
   "scripts": {
     "test": "standard",
-    "build": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/pop.html ./dist/pop.html && cp ./src/popup.js ./dist/popup.js && cp ./src/roboto-mono.ttf ./dist/roboto-mono.ttf && cp ./src/cancel.png ./dist/cancel.png && cp ./src/left-arrow.png ./dist/left-arrow.png && cp ./src/settings-cog.png ./dist/settings-cog.png && cp ./src/info.png ./dist/info.png"
+    "build": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/index.html ./dist/index.html && cp ./src/page.js ./dist/page.js && cp ./src/roboto-mono.ttf ./dist/roboto-mono.ttf && cp ./src/cancel.png ./dist/cancel.png && cp ./src/left-arrow.png ./dist/left-arrow.png && cp ./src/settings-cog.png ./dist/settings-cog.png && cp ./src/info.png ./dist/info.png"
   },
   "devDependencies": {
     "ncp": "2.0.0",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "eth-provider": "0.9.4",
-    "ethereum-provider": "0.4.4"
+    "ethereum-provider": "0.4.4",
+    "web-ext": "^6.4.0"
   }
 }
