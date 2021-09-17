@@ -9,7 +9,7 @@
   "main": "src",
   "scripts": {
     "test": "standard",
-    "build": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/pop.html ./dist/pop.html && cp ./src/popup.js ./dist/popup.js && cp ./src/roboto-mono.ttf ./dist/roboto-mono.ttf && cp ./src/cancel.png ./dist/cancel.png && cp ./src/left-arrow.png ./dist/left-arrow.png && cp ./src/settings-cog.png ./dist/settings-cog.png && cp ./src/swap.png ./dist/swap.png"
+    "build": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/pop.html ./dist/pop.html && cp ./src/popup.js ./dist/popup.js && cp ./src/roboto-mono.ttf ./dist/roboto-mono.ttf && cp ./src/cancel.png ./dist/cancel.png && cp ./src/left-arrow.png ./dist/left-arrow.png && cp ./src/settings-cog.png ./dist/settings-cog.png && cp ./src/info.png ./dist/info.png"
   },
   "devDependencies": {
     "ncp": "2.0.0",

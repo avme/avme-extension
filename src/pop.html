@@ -14,14 +14,16 @@
         font-family: 'Roboto Mono';
         src: url(roboto-mono.ttf);
       }
+
       html {
         /* --iconSpacing: 12px; */
         --iconSpacing: 16px;
         --mm: rgb(230, 138, 60);
         --good: rgb(148, 0, 246);
-        --backgroundColor: white;
+        --backgroundColor: #1D1827;
         --max-width: 280px;
       }
+
       body {
         
         /* min-width: 280px; */
@@ -31,18 +33,21 @@
         background-color: var(--backgroundColor);
         font-family: 'Roboto Mono', sans-serif;
         font-weight: 300;
-        font-size: 16px;
+        font-size: 12px;
+        color: white;
       }
+
       a, a:hover, a:visited {
-        /* color: white; */
+        color: white;
         font-size: 12px;
         text-decoration: none;
         font-weight: 400;
       }
+
       img {
-        width: 90px;
-        height: 90px;
+        height: 48px;
       }
+
       .container {
         display: flex;
         flex-direction: column;
@@ -50,123 +55,174 @@
         align-content: flex-start;
         /* align-content: center; */
       }
+
       .container div{
         flex-grow: 1;
       }
+
       .center-flex
       {
         display: flex;
         justify-content: center;
         align-items: center;
       }
-      ul li {
-        background-color: var(--backgroundColor);
-        color: #243247;
-        text-align: left;
-        vertical-align: middle;
-        display: flex;
-        padding-top: 8px;
-        padding-bottom: 8px;
-        font-size: 12px;
-      }
-      li img {
-        width: 18px;
-        height: 18px;
-        margin-left: var(--iconSpacing);
-        margin-right: var(--iconSpacing);
-        align-self: center;
-      }
-      li:hover {
-        background-color: #E7E8EA;
-      }
+
       .main-list li:nth-child(1)
       {
         padding-left: var(--iconSpacing);
         padding-right: var(--iconSpacing);
       }
+
       .main-list li:hover:nth-child(1)
       {
         background-color: var(--backgroundColor);
       }
-      li strong
-      {
-        align-self: center;
-        padding-bottom: 1px;
-      }
+
       #label-status
       {
         color: var(--good);
       }
+
       #label-swap
       {
         color: var(--mm);
       }
+
       /*Options*/
-      .options
+      .stack
       {
         width: var(--max-width);
-        min-height: 100px;
-        background-color: rgba(255, 0, 0, 0.432);
+        /* min-height: 100px; */
+        /* background-color: rgba(255, 0, 0, 0.432); */
         top: 0;
         left: 0;
         position: absolute;
       }
+
       .disabled {
         display: none;
       }
+
+      .float-icon
+      {
+        margin-left: auto;
+        margin-top: 8px;
+        margin-right: 8px;
+      }
+      
+      .info
+      {
+        margin-left: 8px;
+        margin-top: 8px;
+        margin-right: auto;
+      }
+      
+      .float-icon div
+      {
+        cursor:pointer;
+      }
+
+      .float-icon div img {
+        padding: 6px;
+        width: 18px;
+        height: 18px;
+      }
+      
+      .form-bg
+      {
+        width: calc(var(--max-width) * 0.885);
+        vertical-align: middle;
+        margin: 16px;
+        background-color: #0F0C18;
+        border-radius: 8px;
+      }
+
+      input[type="text"], textarea
+      {
+        border: solid 1px #8477A4;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        background-color : var(--backgroundColor);
+        padding: 4px;
+        outline: none;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        color: white;;
+        margin-bottom: 8px;
+      }
+
+      input[type="text"]:focus, textarea:focus
+      {
+        background-color : var(--backgroundColor);
+        border: solid 1px #8477A4;
+        color: white;
+      }
+
+      label
+      {
+        padding: 4px 0;
+      }
+      
     </style>
   </head>
   <body>
     <div style="padding-bottom: 4px;">
       <!--Main-->
-      <div class='within container'>
-        <div class='center-flex' style= "padding: 8px; background-color: #F6F7F8;">
-          <img src='icon.png'>
+      <div id="main" class="within container">
+        <div class="center-flex" style= "padding: 24px; /*margin: 32px 0;*/ margin-top: 32px;">
+          <img src="icon.png">
         </div>
-        <div style="background-color: white; text-align: center;">
-          <ul class="main-list">
-            <li>
-              <p id='status-label'>
-                <strong>STATUS:</strong> <strong>Wallet not Initialized</strong>
-                <!-- <strong>STATUS:</strong> <strong>Injecting as</strong> <strong id="label-status">AVME</strong> -->
-              </p>
-            </li>
-            <hr style="border-color: white">
-            <!-- <li><img src='swap.png'>
-              <p>
-                <strong>Swap to</strong> <strong id="label-swap">METAMASK</strong>
-              </p>
-            </li> -->
-            <li id='options-popup'><img src='settings-cog.png'>Options</li>
-            <li id='close-popup'><img src='cancel.png'>Close</li>
-          </ul>
-        </div>
-        <!-- <img src='icon.png' />
-        <div class='sub'>AVME is not currently running on your machine</div>
-        <div style="background-color: rgba(0,0,0,0.4);padding: 10px; margin-top:21px; padding-bottom:14px;">
-            <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">Click here to download the latest version</a>
-        </div> -->
       </div>
-
+      <!--Bubble Actions-->
+      <div class='stack'>
+        <div style="display: flex; flex-direction: row;">
+          <div class="float-icon info">
+            <div>
+              <img src='info.png'>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 6px; width: 100%;">
+            <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">
+              <p>Status:</p>
+              <p>Wallet not initialized</p>
+            </a>
+          </div>
+          <div class="float-icon">
+            <div id='open-options'>
+              <img src='settings-cog.png'>
+            </div>
+          </div>
+        </div>
+      </div>
       <!--Options-->
-      <div class='options disabled'>
-        <div style="background-color: white; text-align: center;">
-          <ul>
-            <li id='close-options'><img src='left-arrow.png'><strong>Back</strong></li>
-            <hr style="border-color: white">
-          </ul>
+      <div id="options-popup" class='stack form-bg disabled'>
+        <div style="text-align: center;">
+          
+          <div id='close-options' style="display: flex; flex-direction: row;">
+            <div class='float-icon info' style="margin-left: 8px;">
+              <div>
+                <img src='left-arrow.png'>
+              </div>
+            </div>
+            <div style="align-self: center; margin-top: 6px; margin-right: 32px; width: 100%;text-decoration: underline; text-underline-offset:8px;">
+                <p>OPTIONS</p>
+            </div>
+          </div>
+          
           <div style="
             display: flex;
             flex-direction: column;
             align-content: flex-start;
             text-align: left;
             gap: 4px;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 16px;
+            font-size: 12px;
           ">
-            <label for="address"><strong>Address:</strong></label>
+            <label for="address">ADDRESS</label>
             <input id="address"type="text">
-            <label for="port"><strong>Port:</strong></label>
+            <label for="port">PORT</label>
             <input id="port"type="text">
           </div>
         </div>
@@ -175,59 +231,3 @@
   </body>
   <script src="popup.js"></script>
 </html>
-
-<!-- <script src="index.js"></script> -->
-<!--
-
-  <!doctype html>
-<html>
-  <head>
-    <title>AVME</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500" rel="stylesheet">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap');
-      body {
-        margin:0;
-        padding:0;
-        display: inline-block;
-        min-width: 280px;
-        /* min-height: 240px; */
-        background-image: linear-gradient(#9300f5, #3bc5f4);
-        color: white;
-        font-family: 'Roboto Mono', sans-serif;
-        font-weight: 300;
-        font-size: 16px;
-      }
-      .within {
-        margin-top:16px;
-        text-align: center;
-      }
-      .sub {
-        margin: 18px 18px 18px 22px;
-      }
-      a, a:hover, a:visited {
-        color: white;
-        font-size: 12px;
-        text-decoration: none;
-        font-weight: 400;
-      }
-      img {
-        width: 90px;
-        height: 90px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class='within'>
-      <img src='icon.png' />
-      <div class='sub'>AVME is not currently running on your machine</div>
-      <div style="background-color: rgba(0,0,0,0.4);padding: 10px; margin-top:21px; padding-bottom:14px;">
-          <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">Click here to download the latest version</a>
-      </div>
-    </div>
-  </body>
-</html>
-
-
--->
