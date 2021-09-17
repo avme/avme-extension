@@ -18,4 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         chrome.storage.sync.set({'address':_find('#address').value});
         chrome.storage.sync.set({'port':_find('#port').value});
     });
+
+    _find('#close-popup').addEventListener("click", () => window.close());
 });
