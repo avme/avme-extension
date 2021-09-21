@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+  <head>
+    <title>AVME</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500" rel="stylesheet"> -->
+    <style>
+      * {
+        margin:0;
+        padding:0;
+      }
+
+      @font-face {
+        font-family: 'Roboto Mono';
+        src: url(roboto-mono.ttf);
+      }
+
+      html {
+        /* --iconSpacing: 12px; */
+        --iconSpacing: 16px;
+        --mm: rgb(230, 138, 60);
+        --avme: rgb(148, 0, 246);
+        --backgroundColor: #1D1827;
+        /* --max-width: 280px; */
+        --max-width: 300px;
+      }
+
+      body {
+        
+        /* min-width: 280px; */
+        width: var(--max-width);
+        /* min-height: 240px; */
+        /* background-image: linear-gradient(#9300f5, #3bc5f4); */
+        background-color: var(--backgroundColor);
+        font-family: 'Roboto Mono', sans-serif;
+        font-weight: 300;
+        font-size: 12px;
+        color: white;
+      }
+
+      a, a:hover, a:visited {
+        color: white;
+        font-size: 12px;
+        text-decoration: none;
+        font-weight: 400;
+      }
+
+      img {
+        height: 48px;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: flex-start;
+        /* align-content: center; */
+      }
+
+      .container div{
+        flex-grow: 1;
+      }
+
+      .center-flex
+      {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-list li:nth-child(1)
+      {
+        padding-left: var(--iconSpacing);
+        padding-right: var(--iconSpacing);
+      }
+
+      .main-list li:hover:nth-child(1)
+      {
+        background-color: var(--backgroundColor);
+      }
+
+      .metamask
+      {
+        color: var(--mm);
+      }
+
+      .avme
+      {
+        color: var(--avme);
+      }
+
+      /*Options*/
+      .stack
+      {
+        width: var(--max-width);
+        /* min-height: 100px; */
+        /* background-color: rgba(255, 0, 0, 0.432); */
+        top: 0;
+        left: 0;
+        position: absolute;
+      }
+
+      .disabled {
+        display: none !important;
+      }
+
+      .float-icon
+      {
+        margin-left: auto;
+        margin-top: 8px;
+        margin-right: 8px;
+      }
+      
+      .info
+      {
+        margin-left: 8px;
+        margin-top: 8px;
+        margin-right: auto;
+      }
+      
+      .float-icon div
+      {
+        cursor:pointer;
+      }
+
+      .float-icon div img {
+        padding: 6px;
+        width: 18px;
+        height: 18px;
+      }
+      
+      .form-bg
+      {
+        width: calc(var(--max-width) * 0.885);
+        vertical-align: middle;
+        margin: 16px;
+        background-color: #0F0C18;
+        border-radius: 8px;
+      }
+
+      input[type="text"], textarea
+      {
+        border: solid 1px #8477A4;
+        border-top-width: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        background-color : var(--backgroundColor);
+        padding: 4px;
+        outline: none;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        color: white;;
+        margin-bottom: 8px;
+      }
+
+      input[type="text"]:focus, textarea:focus
+      {
+        background-color : var(--backgroundColor);
+        border: solid 1px #8477A4;
+        color: white;
+      }
+
+      label
+      {
+        padding: 4px 0;
+      }
+      
+      #form-options {
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+        text-align: left;
+        gap: 4px;
+        padding: 16px;
+        font-size: 12px;
+      }
+
+      #toggle-extension
+      {
+        cursor:pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="padding-bottom: 4px;">
+      <div>
+        <p id="mmAppearToggle"></p>
+        <p id="mmAppearDescription"></p>
+        <p id="mmAppearSub"></p>
+      </div>
+      <div id="main" class="within container">
+        <div class="center-flex" style= "padding: 24px; padding-bottom: 18px; /*margin: 32px 0;*/ margin-top: 32px;">
+          <img src="icon.png">
+        </div>
+        <div id="toggle-extension" style="display: flex; flex-direction: row; padding-bottom: 8px;">
+          <div class="float-icon info">
+            <div>
+              <!-- <img src='info.png'> -->
+              <img src='toggle-off.png'>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 6px; width: 100%; margin-right:32px;">
+            <!-- <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab"></a> -->
+              <p>Status:</p>
+              <p id="label-status">Extension is now <span style="color: red;">Disabled</span></p>
+            <!-- </a> -->
+          </div>
+        </div>
+      </div>
+      <!--Floating Elements-->
+      <div class='stack'>
+        <div style="display: flex; flex-direction: row;">
+          <div class="float-icon info">
+            <div>
+              <!-- <img src='info.png'> -->
+            </div>
+          </div>
+          <div style="align-self: center; margin-top: 6px; margin-left: 32px; width: 100%; text-align: center;">
+            <p id="label-connected"><span class="avme">AVME</span> Wallet wasn't detected.</p>
+          </div>
+          <div class="float-icon">
+            <div id='open-options'>
+              <img src='settings-cog.png'>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Options-->
+      <div id="options-popup" class='stack form-bg disabled'>
+        <div style="text-align: center;"> 
+          <div id='close-options' style="display: flex; flex-direction: row;">
+            <div class='float-icon info' style="margin-left: 8px;">
+              <div>
+                <img src='left-arrow.png'>
+              </div>
+            </div>
+            <div style="align-self: center; margin-top: 6px; margin-right: 32px; width: 100%;text-decoration: underline; text-underline-offset:8px;">
+                <p>OPTIONS</p>
+            </div>
+          </div>
+          <div id="form-options">
+            <label for="address">ADDRESS</label>
+            <input id="address"type="text">
+            <label for="port">PORT</label>
+            <input id="port"type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="page.js"></script>
+</html>
