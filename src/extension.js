@@ -3,27 +3,39 @@ const EthereumProvider = require('ethereum-provider')
 
 class Connection extends EventEmitter {
   constructor () {
-    super()
+    super();
     window.addEventListener('message', event => {
       if (event && event.source === window && event.data && event.data.type === 'eth:payload') {
         this.emit('payload', event.data.payload)
       }
     })
-    setTimeout(() => this.emit('connect'), 0)
+    setTimeout(() => this.emit('connect'), 0);
   }
 
   send (payload) {
-    window.postMessage({ type: 'eth:send', payload }, window.location.origin)
+    window.postMessage({ type: 'eth:send', payload }, window.location.origin);
   }
 }
 
-class MetaMaskProvider extends EthereumProvider {}
+let extensionEnabled = window.localStorage.getItem('__avmePlugin__');
 
 try {
-  window.ethereum = new MetaMaskProvider(new Connection())
-  window.ethereum.isMetaMask = true
-  window.ethereum._metamask = true
-  window.ethereum.setMaxListeners(0)
+  extensionEnabled = JSON.parse(extensionEnabled);
 } catch (e) {
-  console.error('MetaMaskProvider Error:', e)
+  extensionEnabled = false;
+}
+
+if (extensionEnabled) {
+  setTimeout(()=>{
+    class MetaMaskProvider extends EthereumProvider {}
+    try {
+      window.ethereum = new MetaMaskProvider(new Connection());
+      window.ethereum.isAvmeExtension = true;
+      window.ethereum.isMetaMask = true;
+      window.ethereum._metamask = true;
+      window.ethereum.setMaxListeners(0);
+    } catch (e) {
+      console.error('Error:', e)
+    }
+  }, 250);
 }

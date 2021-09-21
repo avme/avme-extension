@@ -3,13 +3,13 @@ chrome.browserAction.setPopup({ popup: 'index.html' });
 /*User settings*/
 
 const init = new Promise(async (resolve) => {
-    console.log("INIT FOI CHAMADO");
+    // console.log("INIT FOI CHAMADO");
     let address;
     let port;
     /// ADDRESS
     await chrome.storage.sync.get(['address'], async (result) => {
 
-        console.log(`result ${result.address}`)
+        // console.log(`result ${result.address}`)
         if(result.address === undefined)
         {
             address = '127.0.0.1';
@@ -17,25 +17,26 @@ const init = new Promise(async (resolve) => {
         }
         else address = result.address;
 
-        console.log(`final param ${address}`);
+        // console.log(`final param ${address}`);
     });
 
     /// PORT
     await chrome.storage.sync.get(['port'], async (result) => {
 
-        console.log(`result ${result.port}`)
+        // console.log(`result ${result.port}`)
         if(result.port === undefined)
         {
-            port = 6969;
+            port = 4812;
             chrome.storage.sync.set({port});
         }
         else port = result.port;
 
-        console.log(`final param ${port}`);
+        // console.log(`final param ${port}`);
 
         resolve({address,port});
     });
 })
+
 
 init.then((url) => {
     startProviders(url);
@@ -51,7 +52,7 @@ const startProviders = url => {
     let {address, port} = url;
     const identity = 'avme-plugin';
     // const identity = 'frame-extension';
-    console.info(`STARTING WS CLIENT AT: "ws://${address}:${port}?identity=${identity}"`);
+    // console.info(`STARTING WS CLIENT AT: "ws://${address}:${port}?identity=${identity}"`);
     const ethProvider = require('eth-provider');
     const provider = ethProvider(`ws://${address}:${port}?identity=${identity}`);
     const subs = {};
@@ -62,11 +63,15 @@ const startProviders = url => {
         return path[0] + '//' + path[2]
     }
 
-    provider.on('connect', () => connected(true));
+    provider.on('connect', () => {
+        connected(true);
+        console.log(`Connected to ${address}:${port}`);
+    });
+
     provider.on('disconnect', () => connected(false));
 
     provider.connection.on('payload', payload => {
-        console.log(payload);
+        // console.log(payload);
         if (typeof payload.id !== 'undefined') {
             if (pending[payload.id]) {
                 const { tabId, payloadId } = pending[payload.id]
@@ -98,10 +103,10 @@ const startProviders = url => {
     chrome.storage.onChanged.addListener(function (changes, namespace) {
         let shouldRestart = false;
         for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
-            console.log(
-                `Storage key "${key}" in namespace "${namespace}" changed.`,
-                `Old value was "${oldValue}", new value is "${newValue}".`
-            );
+            // console.log(
+            //     `Storage key "${key}" in namespace "${namespace}" changed.`,
+            //     `Old value was "${oldValue}", new value is "${newValue}".`
+            // );
             if(key === 'address') 
             {
                 address = newValue;
@@ -120,3 +125,15 @@ const startProviders = url => {
         }
     });
 }
+
+
+/// Listining if any page update
+
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//     if(changeInfo.status == 'complete')
+//     {
+//         console.log(`TAB ID: ${tabId}`);
+//         console.log(`changeInfo: ${JSON.stringify(changeInfo)}`);
+//         console.log(`TAB: ${JSON.stringify(tab)}`);
+//     }
+// });

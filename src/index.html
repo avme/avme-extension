@@ -79,12 +79,12 @@
         background-color: var(--backgroundColor);
       }
 
-      #metamask
+      .metamask
       {
         color: var(--mm);
       }
 
-      #avme
+      .avme
       {
         color: var(--avme);
       }
@@ -101,7 +101,7 @@
       }
 
       .disabled {
-        display: none;
+        display: none !important;
       }
 
       .float-icon
@@ -175,13 +175,37 @@
         padding: 16px;
         font-size: 12px;
       }
+
+      #toggle-extension
+      {
+        cursor:pointer;
+      }
     </style>
   </head>
   <body>
     <div style="padding-bottom: 4px;">
+      <div>
+        <p id="mmAppearToggle"></p>
+        <p id="mmAppearDescription"></p>
+        <p id="mmAppearSub"></p>
+      </div>
       <div id="main" class="within container">
-        <div class="center-flex" style= "padding: 24px; /*margin: 32px 0;*/ margin-top: 32px;">
+        <div class="center-flex" style= "padding: 24px; padding-bottom: 18px; /*margin: 32px 0;*/ margin-top: 32px;">
           <img src="icon.png">
+        </div>
+        <div id="toggle-extension" style="display: flex; flex-direction: row; padding-bottom: 8px;">
+          <div class="float-icon info">
+            <div>
+              <!-- <img src='info.png'> -->
+              <img src='toggle-off.png'>
+            </div>
+          </div>
+          <div style="text-align: center; margin-top: 6px; width: 100%; margin-right:32px;">
+            <!-- <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab"></a> -->
+              <p>Status:</p>
+              <p id="label-status">Extension is now <span style="color: red;">Disabled</span></p>
+            <!-- </a> -->
+          </div>
         </div>
       </div>
       <!--Floating Elements-->
@@ -189,14 +213,11 @@
         <div style="display: flex; flex-direction: row;">
           <div class="float-icon info">
             <div>
-              <img src='info.png'>
+              <!-- <img src='info.png'> -->
             </div>
           </div>
-          <div style="text-align: center; margin-top: 6px; width: 100%;">
-            <a href="https://github.com/avme/avme-wallet/releases/" target="_newtab">
-              <p>Status:</p>
-              <p id="label-status"></p>
-            </a>
+          <div style="align-self: center; margin-top: 6px; margin-left: 32px; width: 100%; text-align: center;">
+            <p id="label-connected"><span class="avme">AVME</span> Wallet wasn't detected.</p>
           </div>
           <div class="float-icon">
             <div id='open-options'>
