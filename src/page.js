@@ -23,21 +23,29 @@ const isConnected = isConnected => {
 }
 
 const extensionToggle = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]) {
-        chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage[\'__avmePlugin__\']' }, (results) => {
-          let enabled = false;
-          if (results) {
-            try {
-                enabled = JSON.parse(results[0]);
-            } catch (e) {
-                enabled = false;
-            }
-            chrome.tabs.executeScript(tabs[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(!enabled)}); window.location.reload();` });
-          }
-          window.close();
-        })
-      }
+    chrome.tabs.query({ active: true, currentWindow: true }, currentTab => {
+        let origin = getOrigin(currentTab[0].url);
+        chrome.tabs.query({}, tabs => {
+            tabs.forEach(tab => {
+                if(tab.url.match("\\b"+origin+"\\b"))
+                {
+                    chrome.tabs.executeScript(tab.id, { code: 'localStorage[\'__avmePlugin__\']' }, (results) => {
+                        let enabled = false;
+                        if (results) {
+                            try {
+                                enabled = JSON.parse(results[0]);
+                            } catch (e) {
+                                enabled = false;
+                            }
+                            chrome.tabs.executeScript(tab.id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(!enabled)});` });
+                            chrome.tabs.reload(tab.id);
+                        }
+                        
+                    });
+                }
+            });
+            window.close();
+        });
     });
 }
 
@@ -107,61 +115,53 @@ if (sync)
 }
 
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage[\'__avmePlugin__\']' }, (results) => {
-        let enabled = true;
-        if (results) {
-            try {
-                enabled = JSON.parse(results[0]);
-            } catch (e) {
-                enabled = true;
+    chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage[\'__avmePlugin__\']' }, (enabledInSite) => {
+        chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage[\'__isConnected__\']' }, (isConnected) => {
+            let enabled = true;
+            let connected = true;
+            if (enabledInSite) {
+                try {
+                    enabled = JSON.parse(enabledInSite[0]);
+                } catch (e) {
+                    enabled = true;
+                }
             }
-        }
-        // enabled = enabled == null ? true : enabled;
-        if(enabled == null)
-        {
-            enabled = true;
-            chrome.tabs.executeScript(tabs[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(enabled)}); window.location.reload();` });
-        }
+            if (isConnected) {
+                try {
+                    connected = JSON.parse(isConnected[0]);
+                } catch (e) {
+                    connected = true;
+                }
+            }
+            // enabled = enabled == null ? true : enabled;
+            if(enabled == null)
+            {
+                enabled = true;
+                chrome.tabs.executeScript(tabs[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(enabled)}); window.location.reload();` });
+            }
 
-        // const sub = document.getElementById('mmAppearSub');
+            // const sub = document.getElementById('mmAppearSub');
 
-        const image = _find('#toggle-extension').querySelector('IMG');
-        const label = _find("#label-status");
+            const image = _find('#toggle-extension').querySelector('IMG');
+            const label = _find("#label-status");
 
-        if (enabled) {
-            image.src = './toggle-on.png';
-            label.innerHTML = "Connected as <span class=\"metamask\">MetaMask</span>";
-            // label.innerHTML = "Loading...";
-        } else {
-            image.src = './toggle-off.png';
-            label.innerHTML = "Extension is now <span style=\"color: red;\">Disabled</span>";
-        }
-        // sub.innerHTML = `${getOrigin(tabs[0].url)}`
-    })
-  })
+            if (enabled && connected) {
+                image.src = './toggle-on.png';
+                label.innerHTML = "Connected as <span class=\"metamask\">MetaMask</span>";
+                // label.innerHTML = "Loading...";
+            } else if (connected) {
+                image.src = './toggle-off.png';
+                label.innerHTML = "Extension is now <span style=\"color: red;\">Disabled</span>";
+            } else if (enabled)
+            {
+                image.src = './toggle-off.png';
+                label.innerHTML = "Couldn't find the <span class=\"avme\">Wallet</span>";
+            }
+        });
+    });
+});
 
-// if(window.localStorage.getItem('extension-enabled') == undefined) window.localStorage.setItem('extension-enabled', false);
-
-// if(window.localStorage.getItem('extension-enabled') == 'true')
-// {
-//     _find('#toggle-extension').querySelector('IMG').src = './toggle-on.png';
-//     _find("#label-status").innerHTML = "Loading...";
-// }
-// else
-// {
-//     _find('#toggle-extension').querySelector('IMG').src = './toggle-off.png';
-//     _find("#label-status").innerHTML = "Extension is now <span style=\"color: red;\">Disabled</span>";
-// }
-
-// isConnected(connected);
-// alert(connected);
-// new Promise(resolve => {
-//     chrome.storage.local.get(['isConnected'], ({isConnected}) => {
-//         resolve(isConnected);
-//     });
-// }).then(res => {
-//     isConnected(res);
-// });
-
-
-// _find('#close-popup').addEventListener("click", () => window.close());
+const getOrigin = url => {
+    const path = url.split('/')
+    return path[0] + '//' + path[2]
+}

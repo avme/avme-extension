@@ -44,6 +44,24 @@ init.then((url) => {
 
 const connected = isConnected => {
     chrome.storage.local.set({isConnected});
+    chrome.tabs.query({}, (tabs) => {
+        tabs.forEach(tab => {
+            if(tab.url.match(/^http|https/i))
+            {
+            chrome.tabs.executeScript(tab.id,{code: 'localStorage[\'__avmePlugin__\']'},
+                usingPlugin =>
+                {
+                    // console.log(`${usingPlugin}  :  ${tab.url}`);
+                    if(usingPlugin == 'true')
+                    {
+                        chrome.tabs.executeScript(tab.id, {code : `localStorage.setItem('__isConnected__', ${JSON.stringify(isConnected)});`});
+                        chrome.tabs.reload(tab.id);
+                    }
+                }
+            )}
+        });
+        
+    });
 }
 
 connected(false);
@@ -65,7 +83,7 @@ const startProviders = url => {
 
     provider.on('connect', () => {
         connected(true);
-        console.log(`Connected to ${address}:${port}`);
+        // console.log(`Connected to ${address}:${port}`);
     });
 
     provider.on('disconnect', () => connected(false));
@@ -125,8 +143,6 @@ const startProviders = url => {
         }
     });
 }
-
-
 /// Listining if any page update
 
 // chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -137,3 +153,6 @@ const startProviders = url => {
 //         console.log(`TAB: ${JSON.stringify(tab)}`);
 //     }
 // });
+// chrome.tabs.query({}, (tabs) => {
+//     console.log(tabs);
+//     });

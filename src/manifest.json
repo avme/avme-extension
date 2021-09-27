@@ -24,7 +24,9 @@
   "permissions": [
 	"activeTab",
     "tabs",
-    "storage"
+    "storage",
+	"http://*/*",
+	"https://*/*"
   ],
   "icons": {
     "16": "icons/icon16.png",

@@ -19,26 +19,24 @@ class Connection extends EventEmitter {
 }
 
 let extensionEnabled = window.localStorage.getItem('__avmePlugin__');
-let isConnected = window.localStorage.getItem('isConnected');
+let isConnected = window.localStorage.getItem('__isConnected__');
 
 try {
   extensionEnabled = JSON.parse(extensionEnabled);
 } catch (e) {
   extensionEnabled = false;
 }
+
+try {
+  isConnected = JSON.parse(isConnected);
+} catch (e) {
+  isConnected = false;
+}
+
+
 (async () =>{
-  const provider = await detectEthereumProvider();
-  if (extensionEnabled) {
-    // alert(`extensionEnabled ${extensionEnabled}`);
-    // setTimeout(()=>{
-  
-    
-    
-    
-    // // From now on, this should always be true:
-    // // provider === window.ethereum
-    // startApp(provider); // initialize your app
-    
+  await detectEthereumProvider();
+  if (extensionEnabled && isConnected) {
     class MetaMaskProvider extends EthereumProvider {}
     try {
       window.ethereum = new MetaMaskProvider(new Connection());
@@ -46,11 +44,8 @@ try {
       window.ethereum.isMetaMask = true;
       window.ethereum._metamask = true;
       window.ethereum.setMaxListeners(0);
-
-      // alert(`injected`);
     } catch (e) {
       console.error('Error:', e)
     }
-    // }, 250);
   }
 })();
