@@ -1,5 +1,6 @@
-const EventEmitter = require('events')
-const EthereumProvider = require('ethereum-provider')
+const EventEmitter = require('events');
+const EthereumProvider = require('ethereum-provider');
+const detectEthereumProvider = require('@metamask/detect-provider');
 
 class Connection extends EventEmitter {
   constructor () {
@@ -18,15 +19,26 @@ class Connection extends EventEmitter {
 }
 
 let extensionEnabled = window.localStorage.getItem('__avmePlugin__');
+let isConnected = window.localStorage.getItem('isConnected');
 
 try {
   extensionEnabled = JSON.parse(extensionEnabled);
 } catch (e) {
   extensionEnabled = false;
 }
-
-if (extensionEnabled) {
-  setTimeout(()=>{
+(async () =>{
+  const provider = await detectEthereumProvider();
+  if (extensionEnabled) {
+    // alert(`extensionEnabled ${extensionEnabled}`);
+    // setTimeout(()=>{
+  
+    
+    
+    
+    // // From now on, this should always be true:
+    // // provider === window.ethereum
+    // startApp(provider); // initialize your app
+    
     class MetaMaskProvider extends EthereumProvider {}
     try {
       window.ethereum = new MetaMaskProvider(new Connection());
@@ -34,8 +46,11 @@ if (extensionEnabled) {
       window.ethereum.isMetaMask = true;
       window.ethereum._metamask = true;
       window.ethereum.setMaxListeners(0);
+
+      // alert(`injected`);
     } catch (e) {
       console.error('Error:', e)
     }
-  }, 250);
-}
+    // }, 250);
+  }
+})();
