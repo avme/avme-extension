@@ -31,6 +31,7 @@ try {
   isConnected = JSON.parse(isConnected);
 } catch (e) {
   isConnected = false;
+  window.localStorage.setItem('__isConnected__', isConnected);
 }
 
 
