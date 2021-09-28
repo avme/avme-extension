@@ -31,9 +31,13 @@ try {
   isConnected = JSON.parse(isConnected);
 } catch (e) {
   isConnected = false;
-  window.localStorage.setItem('__isConnected__', isConnected);
+  window.localStorage.setItem('__isConnected__', JSON.stringify(false));
 }
 
+// if(isConnected != true)
+// {
+//   window.localStorage.setItem('__isConnected__', false);
+// }
 
 (async () =>{
   await detectEthereumProvider();
@@ -49,4 +53,15 @@ try {
       console.error('Error:', e)
     }
   }
+  // else if(extensionEnabled == false && isConnected)
+  // {
+  //   window.localStorage.setItem('__isConnected__', JSON.stringify(false));
+  // }
+  
+  
+  // console.log("extensionEnabled");
+  // console.log(extensionEnabled);
+  // console.log("isConnected");
+  // console.log(isConnected);
+
 })();

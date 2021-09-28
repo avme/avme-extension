@@ -1,6 +1,6 @@
 {
   "name": "avme-extension",
-  "version": "0.0.1",
+  "version": "0.3.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/avme/avme-extension.git"

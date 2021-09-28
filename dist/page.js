@@ -6,7 +6,6 @@ const popupHeight = _find('#main').offsetHeight;
 const sync = chrome.storage != undefined || chrome.storage != null ? true : false;
 
 const isConnected = isConnected => {
-    // alert("IS CONNECTED " + isConnected);
     if(isConnected) 
     {
         // _find("#label-connected").innerHTML = "<span class=\"avme\">Wallet</span> detected";
@@ -24,27 +23,30 @@ const isConnected = isConnected => {
 
 const extensionToggle = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, currentTab => {
+        window.close();
         let origin = getOrigin(currentTab[0].url);
-        chrome.tabs.query({}, tabs => {
-            tabs.forEach(tab => {
-                if(tab.url.match("\\b"+origin+"\\b"))
-                {
-                    chrome.tabs.executeScript(tab.id, { code: 'localStorage[\'__avmePlugin__\']' }, (results) => {
-                        let enabled = false;
-                        if (results) {
-                            try {
-                                enabled = JSON.parse(results[0]);
-                            } catch (e) {
-                                enabled = false;
-                            }
-                            chrome.tabs.executeScript(tab.id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(!enabled)});` });
+        ///Query of the current page extension
+        chrome.tabs.executeScript(currentTab[0].id, { code: 'localStorage[\'__avmePlugin__\']' }, (currentResult) => {
+            let enabled = false;
+            if(currentResult)
+            {
+                try {
+                    enabled = JSON.parse(currentResult[0]);
+                } catch (e) {
+                    enabled = false;
+                }
+                chrome.tabs.executeScript(currentTab[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(!enabled)});`});
+                
+                chrome.tabs.query({}, tabs => {
+                    tabs.forEach(tab => {
+                        if(tab.url.match("\\b"+origin+"\\b"))
+                        {
                             chrome.tabs.reload(tab.id);
                         }
-                        
                     });
-                }
-            });
-            window.close();
+                });
+            }
+            
         });
     });
 }
@@ -133,14 +135,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
                     connected = true;
                 }
             }
-            // enabled = enabled == null ? true : enabled;
             if(enabled == null)
             {
                 enabled = true;
-                chrome.tabs.executeScript(tabs[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(enabled)}); window.location.reload();` });
+                setTimeout(() => window.close(), 250);
+                chrome.tabs.executeScript(tabs[0].id, { code: `localStorage.setItem('__avmePlugin__', ${JSON.stringify(enabled)});` });
+                chrome.tabs.reload(tabs[0].id);
             }
-
-            // const sub = document.getElementById('mmAppearSub');
 
             const image = _find('#toggle-extension').querySelector('IMG');
             const label = _find("#label-status");

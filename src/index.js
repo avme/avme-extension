@@ -1,5 +1,7 @@
 chrome.browserAction.setPopup({ popup: 'index.html' });
 
+/* Globals */
+var hasConnection;
 /*User settings*/
 
 const init = new Promise(async (resolve) => {
@@ -43,6 +45,7 @@ init.then((url) => {
 });
 
 const connected = isConnected => {
+    hasConnection = isConnected.toString();
     chrome.storage.local.set({isConnected});
     chrome.tabs.query({}, (tabs) => {
         tabs.forEach(tab => {
@@ -60,7 +63,6 @@ const connected = isConnected => {
                 }
             )}
         });
-        
     });
 }
 
@@ -145,14 +147,23 @@ const startProviders = url => {
 }
 /// Listining if any page update
 
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//     if(changeInfo.status == 'complete')
-//     {
-//         console.log(`TAB ID: ${tabId}`);
-//         console.log(`changeInfo: ${JSON.stringify(changeInfo)}`);
-//         console.log(`TAB: ${JSON.stringify(tab)}`);
-//     }
-// });
-// chrome.tabs.query({}, (tabs) => {
-//     console.log(tabs);
-//     });
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if(changeInfo.status == 'complete')
+    {
+        chrome.tabs.executeScript(tabId, {code: 'localStorage[\'__avmePlugin__\']'}, extensionEnabled => {
+            if(extensionEnabled[0] == "true")
+            {
+                chrome.tabs.executeScript(tabId, {code: 'localStorage[\'__isConnected__\']'}, webEnabled => {
+                    if(hasConnection != webEnabled[0])
+                    {
+                        chrome.tabs.executeScript(tab.id, {code : `localStorage.setItem('__isConnected__', ${JSON.stringify(hasConnection)});`});
+                        chrome.tabs.reload(tab.id);
+                    }
+                    
+                    
+                });
+            }
+            
+        });
+    }
+});
