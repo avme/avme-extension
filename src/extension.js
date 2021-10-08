@@ -34,34 +34,40 @@ try {
   window.localStorage.setItem('__isConnected__', JSON.stringify(false));
 }
 
-// if(isConnected != true)
-// {
-//   window.localStorage.setItem('__isConnected__', false);
-// }
-
 (async () =>{
-  await detectEthereumProvider();
-  if (extensionEnabled && isConnected) {
-    class MetaMaskProvider extends EthereumProvider {}
-    try {
-      window.ethereum = new MetaMaskProvider(new Connection());
-      window.ethereum.isAvmeExtension = true;
-      window.ethereum.isMetaMask = true;
-      window.ethereum._metamask = true;
-      window.ethereum.setMaxListeners(0);
-    } catch (e) {
-      console.error('Error:', e)
+  class MetaMaskProvider extends EthereumProvider {}
+  try
+  {
+    const detected = await detectEthereumProvider({timeout:250});
+    console.log(detected);
+    if(detected)
+    {
+      console.info("Metamask was detected");
+    }
+    
+    if (extensionEnabled && isConnected) {
+      try {
+        window.ethereum = new MetaMaskProvider(new Connection());
+        window.ethereum.isAvmeExtension = true;
+        window.ethereum.isMetaMask = true;
+        window.ethereum._metamask = true;
+        window.ethereum.setMaxListeners(0);
+      } catch (e) {
+        console.error('Error:', e)
+      }
+    }
+  } catch(e)
+  {
+    if (extensionEnabled && isConnected) {
+      try {
+        window.ethereum = new MetaMaskProvider(new Connection());
+        window.ethereum.isAvmeExtension = true;
+        window.ethereum.isMetaMask = true;
+        window.ethereum._metamask = true;
+        window.ethereum.setMaxListeners(0);
+      } catch (e) {
+        console.error('Error:', e)
+      }
     }
   }
-  // else if(extensionEnabled == false && isConnected)
-  // {
-  //   window.localStorage.setItem('__isConnected__', JSON.stringify(false));
-  // }
-  
-  
-  // console.log("extensionEnabled");
-  // console.log(extensionEnabled);
-  // console.log("isConnected");
-  // console.log(isConnected);
-
 })();
