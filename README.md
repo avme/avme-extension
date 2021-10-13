@@ -16,7 +16,10 @@ git clone https://github.com/avme/avme-extension
 yarn install
 
 # Build
-yarn build
+Build for Chrome:
+yarn build-chrome
+Build for Firefox:
+yarn build-firefox
 ```
 
 ### Install
