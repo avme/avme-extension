@@ -1,6 +1,6 @@
 {
   "name": "AVME",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "manifest_version": 2,
   "description": "AVME",
   "homepage_url": "https://www.avme.io",
@@ -10,7 +10,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "addon@avme.io",
-      "strict_min_version": "42.0"
+      "strict_min_version": "54"
     }
   },
   "browser_action": {
