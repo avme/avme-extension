@@ -3,7 +3,7 @@ const path = require('path')
 const ncp = require('ncp')
 
 const inject = `
-  var extension = String.raw\`${fs.readFileSync(path.join(__dirname, "../dist/extension.js")).toString()}\`
+  var extension = String.raw\`${fs.readFileSync(path.join(__dirname, "../dist-firefox/extension.js")).toString()}\`
   try {
     chrome.runtime.onMessage.addListener((payload, sender, sendResponse) => window.postMessage({type: 'eth:payload', payload: payload}, window.location.origin))
     window.addEventListener('message', event => {

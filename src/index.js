@@ -49,7 +49,7 @@ const connected = isConnected => {
     chrome.storage.local.set({isConnected});
     chrome.tabs.query({}, (tabs) => {
         tabs.forEach(tab => {
-            if(tab.url.match(/^http|https/i))
+            if(tab.url.match(/^(?=(^http|^https))(?!(.*mozilla))/i))
             {
             chrome.tabs.executeScript(tab.id,{code: 'localStorage[\'__avmePlugin__\']'},
                 usingPlugin =>
@@ -74,7 +74,10 @@ const startProviders = url => {
     // const identity = 'frame-extension';
     // console.info(`STARTING WS CLIENT AT: "ws://${address}:${port}?identity=${identity}"`);
     const ethProvider = require('eth-provider');
-    const provider = ethProvider(`ws://${address}:${port}?identity=${identity}`);
+    const provider = ethProvider([
+        `ws://${address}:${port}?identity=${identity}`,
+        `http://${address}:${port}?identity=${identity}`
+    ]);
     const subs = {};
     const pending = {};
 
@@ -85,7 +88,7 @@ const startProviders = url => {
 
     provider.on('connect', () => {
         connected(true);
-        // console.log(`Connected to ${address}:${port}`);
+        console.log(`Connected to ${address}:${port}`);
     });
 
     provider.on('disconnect', () => connected(false));
