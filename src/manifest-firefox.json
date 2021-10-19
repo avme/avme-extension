@@ -10,7 +10,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "addon@avme.io",
-      "strict_min_version": "54"
+      "strict_min_version": "54.0"
     }
   },
   "browser_action": {
