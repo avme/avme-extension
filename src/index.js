@@ -1,5 +1,4 @@
 chrome.browserAction.setPopup({ popup: 'index.html' });
-
 /* Globals */
 var hasConnection;
 /*User settings*/
@@ -162,11 +161,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                         chrome.tabs.executeScript(tab.id, {code : `localStorage.setItem('__isConnected__', ${JSON.stringify(hasConnection)});`});
                         chrome.tabs.reload(tab.id);
                     }
-                    
-                    
                 });
             }
-            
         });
     }
 });
