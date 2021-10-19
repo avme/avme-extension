@@ -10,7 +10,8 @@
   "scripts": {
     "test": "standard",
     "build-chrome": "rimraf ./dist && webpack --config webpack.config.js && node ./src/inline.js && cp ./src/index.html ./dist/index.html && cp ./src/page.js ./dist/page.js && cp ./src/roboto-mono.ttf ./dist/roboto-mono.ttf && cp ./src/left-arrow.png ./dist/left-arrow.png && cp ./src/settings-cog.png ./dist/settings-cog.png && cp ./src/info.png ./dist/info.png && cp ./src/toggle-on.png ./dist/toggle-on.png && cp ./src/toggle-off.png ./dist/toggle-off.png",
-	"build-firefox": "yarn build-chrome && cp ./src/manifest-firefox.json ./dist/manifest.json"
+	"build-firefox": "rimraf ./dist-firefox && webpack --config webpack-firefox.config.js && node ./src/inline-firefox.js && cp ./src/index.html ./dist-firefox/index.html && cp ./src/page.js ./dist-firefox/page.js && cp ./src/roboto-mono.ttf ./dist-firefox/roboto-mono.ttf && cp ./src/left-arrow.png ./dist-firefox/left-arrow.png && cp ./src/settings-cog.png ./dist-firefox/settings-cog.png && cp ./src/info.png ./dist-firefox/info.png && cp ./src/toggle-on.png ./dist-firefox/toggle-on.png && cp ./src/toggle-off.png ./dist-firefox/toggle-off.png && cp ./src/manifest-firefox.json ./dist-firefox/manifest.json",
+	"build-firefox-old": "yarn build-chrome && cp ./src/manifest-firefox.json ./dist/manifest.json"
   },
   "devDependencies": {
     "ncp": "2.0.0",
